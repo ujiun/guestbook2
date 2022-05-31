@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.GuestDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestVo;
 
 
@@ -38,9 +39,12 @@ public class GuestbookController extends HttpServlet {
 			
 			
 			//데이터 + html --> jsp 시킨다
+			WebUtil.forward(request, response, "/WEB-INF/addList.jsp");
+			
+			/*
 			RequestDispatcher rd = request.getRequestDispatcher("/addList.jsp");
 			rd.forward(request, response);
-			
+			*/
 			
 		}else if("add".equals(action)) {
 
@@ -56,14 +60,20 @@ public class GuestbookController extends HttpServlet {
 			guestDao.guestInsert(guestVo);
 			
 			//리다이렉트 list
-			response.sendRedirect("/guestbook2/gbc?action=list");
+			WebUtil.redirect(request, response, "./gbc?action=list");
 			
+			/*
+			response.sendRedirect("/guestbook2/gbc?action=list");
+			*/
 		}else if("deleteForm".equals(action)) {
 			
 			//데이터 + html --> jsp 시킨다
+			
+			WebUtil.forward(request, response, "/WEB-INF/deleteForm.jsp");
+			/*
 			RequestDispatcher rd = request.getRequestDispatcher("/deleteForm.jsp");
 			rd.forward(request, response);
-			
+			*/
 		}else if("delete".equals(action)) {
 			//파라미터값 받기
 	
@@ -78,8 +88,11 @@ public class GuestbookController extends HttpServlet {
 			dao.guestDelete(vo);
 			
 			//리다이렉트 list
-			response.sendRedirect("/guestbook2/gbc?action=list");
 			
+			WebUtil.redirect(request, response, "./gbc?action=list");
+			/*
+			response.sendRedirect("/guestbook2/gbc?action=list");
+			*/
 		}else {
 			System.out.println("action 파라미터 없음");
 		}
